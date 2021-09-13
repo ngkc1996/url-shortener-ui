@@ -31,7 +31,7 @@ jobs:
       with:
         app-name: 'shorten-my-url'
         publish-profile: ${{ secrets.AzureAppService_PublishProfile_88a36d6358fd45aba669b68b45c7c8d5 }}
-        package: .
+        package: ./dist
 
 
 
