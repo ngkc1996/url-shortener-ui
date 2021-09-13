@@ -30,7 +30,7 @@ jobs:
       with:
         app-name: 'shorten-my-url'
         publish-profile: ${{ secrets.AzureAppService_PublishProfile_ce222a052ed24c2db04e041d165ca9fe }}
-        package: ./dist/url-shortener-ui
+        package: ./dist
 
 ######
 # on:
