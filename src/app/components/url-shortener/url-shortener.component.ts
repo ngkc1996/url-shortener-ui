@@ -21,6 +21,7 @@ export class UrlShortenerComponent implements OnInit {
 
   generatedUrl = '';
   isLoading = false;
+  dummy = false;
 
   ngOnInit(): void {
   }
