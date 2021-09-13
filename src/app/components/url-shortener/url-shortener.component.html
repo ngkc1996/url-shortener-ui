@@ -1,0 +1,42 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <mat-form-field  class="full-width" appearance="fill">
+      <mat-label>Long URL</mat-label>
+      <input 
+        matInput 
+        formControlName="url"
+        placeholder="Input URL here..." 
+        value="">
+    </mat-form-field>
+    <div></div>
+    <mat-card-actions>
+      <button 
+        mat-raised-button 
+        [disabled]="this.form.value.url == null || this.form.value.url == ''"
+        type="submit" 
+        color="primary">
+        Shorten this!
+      </button>
+    </mat-card-actions>
+    
+    
+  </form>
+
+<div>
+  <h3>
+    Your Generated URL:
+  </h3>
+  <mat-spinner *ngIf="isLoading==true"></mat-spinner>
+  <h2>
+    {{ generatedUrl }}
+    <button 
+    mat-mini-fab
+    color="primary"
+    *ngIf="generatedUrl != ''"
+    [cdkCopyToClipboard]="generatedUrl">
+    <mat-icon>
+      content_copy
+    </mat-icon>
+  </button>
+  </h2>
+  
+</div>
