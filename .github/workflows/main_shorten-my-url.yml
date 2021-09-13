@@ -29,7 +29,6 @@ jobs:
       uses: azure/webapps-deploy@v2
       with:
         app-name: 'shorten-my-url'
-        slot-name: 'production'
         publish-profile: ${{ secrets.AzureAppService_PublishProfile_ce222a052ed24c2db04e041d165ca9fe }}
         package: ./dist/url-shortener-ui
 
