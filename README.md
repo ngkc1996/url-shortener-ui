@@ -1,27 +1,52 @@
-# UrlShortenerUi
+# URL Shortener Application
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.2.4.
+![website](docs/website.png)
 
-## Development server
+The application website is hosted at [https://shorten-my-url.azurewebsites.net/](https://shorten-my-url.azurewebsites.net/).
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+This application acts as a typical URL shortening service, where it allows users to shorten long URLs into URLs which are of the form `https://url-shorten.azurewebsites.net/xxxxxxxx`.
 
-## Code scaffolding
+The detailed functionality of the application is as follows:
+1. Users can use either the [website](https://shorten-my-url.azurewebsites.net/) or the backend [API endpoint](https://url-shorten.azurewebsites.net/) to submit a long URL and request for a short one to be generated.
+2. The backend server checks for the validity of the given URL. Only valid URLs are processed.
+3. The backend server keeps a persistent database of all shortened URLs, and reuses shortened URLs when a previously submitted long URL is submitted again.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## Architecture
+This application uses a simple database-backend-frontend architecture.
 
-## Build
+![arch diagram](docs/arch.png)
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+Technologies used:
+- Database: _MongoDB Atlas_
+- Backend: _Flask_ web framework, hosted as a _Azure Web App_
+- Frontend: _Angular_, hosted as a _Azure Web App_
 
-## Running unit tests
+## Frontend
+### Deployment to Azure
+This [link](https://nicolgit.github.io/how-deploy-angular-app-to-azure-appservice-running-linux-from-github/) also provides a detailed guide.
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+1. Create a Web App on Azure, using _Node_ as the Stack.
+2. Push the code to GitHub.
+3. Use the _Deployment Center_ to set up a build and deploy pipeline via _GitHub Actions_. Use the `.yml` file provided in this repository.
+4. Edit the configurations.
+   - Under _Configuration_ > _Application Settings_, add an application setting: `Name`: `WEBSITE_WEBDEPLOY_USE_SCM`; `Value`: `1`
+   - Under _Configuration_ > _General Settings_, set the _Startup Command_ to: `pm2 serve /home/site/wwwroot --no-daemon --spa`
+5. The app should be running at `<app-name>.azurewebsites.net`. Every time a new commit is added to the GitHub repository, the app will be deployed automatically to Azure.
 
-## Running end-to-end tests
+### Local development
+- Install the Angular CLI using `npm install -g @angular/cli`.
+- At the project folder root, install dependencies using `npm install`, then build and serve the app using `ng serve`.
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+### Environment Variables
+Configure in the `environments/` folder.
 
-## Further help
+| Variable                    | Description                                                                                                                    |
+|-----------------------------|--------------------------------------------------------------------------------------------------------------------------------|
+| APIEndpoint                 | The endpoint for the backend API server.       
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+## Backend API Server
+### API Documentation
+Refer to this Swagger page for the [API Documentation](https://app.swaggerhub.com/apis-docs/ngkc1996/url-shortener/1.0.0).
+
+### Code Repository
+Refer to this github [link](https://github.com/ngkc1996/url-shortener-backend) for the backend server code.

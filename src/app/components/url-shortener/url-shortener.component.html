@@ -1,42 +1,56 @@
 <form [formGroup]="form" (ngSubmit)="onSubmit()">
-    <mat-form-field  class="full-width" appearance="fill">
-      <mat-label>Long URL</mat-label>
-      <input 
-        matInput 
-        formControlName="url"
-        placeholder="Input URL here..." 
-        value="">
-    </mat-form-field>
-    <div></div>
-    <mat-card-actions>
-      <button 
-        mat-raised-button 
-        [disabled]="this.form.value.url == null || this.form.value.url == ''"
-        type="submit" 
-        color="primary">
-        Shorten this!
-      </button>
-    </mat-card-actions>
-    
-    
-  </form>
-
-<div>
-  <h3>
+  <mat-form-field  class="full-width" appearance="fill">
+    <mat-label>Long URL</mat-label>
+    <input 
+      matInput 
+      formControlName="url"
+      placeholder="Input URL here..." 
+      value="">
+  </mat-form-field>
+  <div></div>
+  <mat-card-actions>
+    <button 
+      mat-raised-button 
+      [disabled]="this.form.value.url == null || this.form.value.url == ''"
+      type="submit" 
+      color="primary">
+      Shorten this!
+    </button>
+  </mat-card-actions>
+</form>
+<mat-spinner 
+  style="margin-top: 40px"  
+  *ngIf="isLoading == true">
+</mat-spinner>
+<div 
+  style="margin-top: 40px; color:red"
+  *ngIf="showErrorMessage == true">
+  Error: {{ errorMessage }}
+</div>
+<mat-divider
+  *ngIf="showUrl == true"
+  style="margin-top: 40px">
+</mat-divider>
+<div
+  *ngIf="showUrl == true"
+  style="margin-top: 40px">
+  <h4>
     Your Generated URL is:
-  </h3>
-  <mat-spinner *ngIf="isLoading==true"></mat-spinner>
-  <h2>
+  </h4>
+  <h4>
     {{ generatedUrl }}
     <button 
-    mat-mini-fab
-    color="primary"
-    *ngIf="generatedUrl != ''"
-    [cdkCopyToClipboard]="generatedUrl">
-    <mat-icon>
-      content_copy
-    </mat-icon>
-  </button>
-  </h2>
-  
+      mat-mini-fab
+      color="primary"
+      *ngIf="generatedUrl != ''"
+      [cdkCopyToClipboard]="generatedUrl">
+      <mat-icon>
+        content_copy
+      </mat-icon>
+    </button>
+  </h4> 
+  <p
+    style="color:purple">
+      {{ url }}
+  </p>
 </div>

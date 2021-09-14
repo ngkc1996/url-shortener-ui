@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { Subscription } from 'rxjs';
 import { UrlShortenerService } from 'src/app/services/url-shortener.service';
 
 @Component({
@@ -19,23 +18,40 @@ export class UrlShortenerComponent implements OnInit {
     url: null
   })
 
+  url = '';
   generatedUrl = '';
   isLoading = false;
+  showErrorMessage = false;
+  errorMessage = '';
+  showUrl = false;
 
   ngOnInit(): void {
   }
 
   onSubmit() {
-    const url = this.form.value.url
+    this.clearVariables();
+    this.url = this.form.value.url
     this.isLoading = true;
-    this.urlShortenerService.getUrl(url)
-    .subscribe(
-      data => {
-        this.generatedUrl = data;
-        this.isLoading = false;
-      }
-    )
+    this.urlShortenerService.getUrl(this.url)
+      .subscribe(
+        data => {
+          this.generatedUrl = data.url;
+          this.showUrl = true;
+          this.isLoading = false;
+        },
+        error => {
+          this.errorMessage = error.error['message'];
+          this.showErrorMessage = true;
+          this.isLoading = false;
+        }
+      );
     this.form.reset();
   }
 
+  clearVariables() {
+    this.isLoading = false
+    this.showErrorMessage = false;
+    this.showUrl = false;
+    this.url = '';
+  }
 }
